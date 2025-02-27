@@ -1,12 +1,19 @@
-//* This handles RSVP Submissions
-//* This fetches all RSVPs from MongoDB
+//* This handles RSVP Submissions (backend route)
 
-const express = require('express');
+import express from 'express';
+// Create a router to handle requests
 const router = express.Router();
-const RSVP = require('../models/RSVP');
+import rsvpController from './rsvpController.js';
 
-// POST: save rsvp response
+// route will create a guest record in db, send a post req to store guest data
+router.post('/Guest', rsvpController.Guest, (req, res) => {
+  console.log('Hi from the server!');
+  // in json file (res.locals._______)
+  res.status(200).json({});
+});
 
-// GETL fetch rsvps
+//
 
-module.exports = router;
+// POST: save rsvp response (guest record)
+
+export default router;

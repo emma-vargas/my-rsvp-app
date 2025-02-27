@@ -1,10 +1,13 @@
 //* ENTRY POINT for the backend
 
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const path = require('path');
-require('dotenv').config();
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import router from './routes/rsvpRoutes.js';
+import path from 'path';
+// require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -15,6 +18,6 @@ app.use(cors());
 // This lets Express handle JSON requests
 app.use(express.json());
 
-// app.use('/rsvp', require('./routes/rsvpRoutes'));
+app.use('/rsvp', router);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
