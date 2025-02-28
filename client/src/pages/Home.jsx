@@ -1,53 +1,59 @@
 //* main client page
 
 import React, { useState } from 'react';
+// need in order to direct user to another page (Confirmation or Decline)
 import { useNavigate } from 'react-router-dom';
 
 // TODO where user clicks RSVP or Decline to store
+// TODO user is to be redirected to Confirmation Page3 OR Decline Page4
 
 function Home() {
   // Using usestate to store the user’s response
-  // this gives us a piece of state (guestName) and a function (setGuestName) to update state
-  const [guestName, setGuestName] = useState('');
+  // this gives us a piece of state (guestName) and a function (setGuestName) to update data in state
+  const [guestName, setGuestName] = useState(''); // guesName stores name typed
 
   //
-  const [headCount, setHeadCount] = useState('');
+  const [headCount, setHeadCount] = useState(''); // stores number of ppl attending
 
-  //
+  // function that redirects user to Confirmation or Decline page
   const navigate = useNavigate();
 
-  // Handle what happens when the user clicks the button (RSVP)
+  // function sends the user's response to the server when they click the button (RSVP)
   // create a guest record in mongoose w/ fetch post req
   const rsvpHandleButtonClick = async () => {
     try {
+      // how client sends req to server
       // fetch(arg1: server url, arg2: object (req options))
-      // how client sends req to server, req will be sent to the 1st arg (url: server route to create a guest - see route in rsvp.Routes.js), 2nd arg (specifying that its a post req, and we're including a header and telling server to expect it in json)
+      // fetch sends a post req to the server at the route ('/rsvp/Guest') = arg1 | req to create a guest
+      // arg2: specifying that its a post req, data is being sent (not just read) and we're including a header (tells the server to expect data in json format)
       const response = await fetch('/rsvp/Guest', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        // stringify takes an obj or arr snd turns it into a str
+        // stringify takes an obj or arr and turns it into a str to send to server
+        // data being sent to server:
         body: JSON.stringify({
-          name: guestName,
-          headcount: headCount,
-          rsvpStatus: 'Accepted',
+          name: guestName, // name user typed
+          headcount: headCount, // number of guests typed
+          rsvpStatus: 'Accepted', // status is set to 'Accepted'
         }),
       });
-      // redirect to Confirmation.jsx
+      // if request is successful, redirect user to Confirmation.jsx
       if (response.ok) {
-        navigate('/confirmation'); // Redirect user to confirmation page
+        navigate('/confirmation');
       } else {
+        // otherwise log error
         console.error('Failed to submit RSVP');
       }
     } catch (error) {
-      //
+      // if something goes wrong in try block, error is logged
       console.error('Error:', error);
     }
   };
 
-  // Handle what happens when the user clicks the button (Decline)
-  // will create a guest record in mongoose
+  // function sends the user's response to the server when they click the button (Decline)
+  // create a guest record in mongoose w/ fetch post req
   const declineHandleButtonClick = async () => {
     try {
       const response = await fetch('/rsvp/Guest', {
@@ -55,20 +61,22 @@ function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        // stringify takes an obj or arr snd turns it into a str
+        // stringify takes an obj or arr and turns it into a str to send to server
+        // data being sent to server:
         body: JSON.stringify({
-          name: guestName,
-          headcount: 0,
-          rsvpStatus: 'Declined',
+          name: guestName, // name user typed
+          headcount: 0, // bc they declined, they are bringing 0 guests
+          rsvpStatus: 'Declined', // status is set to 'Decline
         }),
       });
-      // redirect to Decline.jsx
+      // if request is successful, redirect user to Decline.jsx
       if (response.ok) {
-        navigate('/decline'); // Redirect user to decline page
+        navigate('/decline');
       } else {
         console.error('Failed to submit RSVP');
       }
     } catch (error) {
+      // if something does wrong, log error
       console.error('Error:', error);
     }
   };
@@ -83,24 +91,26 @@ function Home() {
         {/* The text box for user input */}
         <input
           type='text'
-          // bound prop value to guestName
+          // bounds prop value to guestName (where it's coming from)
           value={guestName}
           // onChange handler calls setGuestName to update the state whenever the user types
           onChange={(e) => setGuestName(e.target.value)} // Update state as they type
-          placeholder='Type your name here...'
+          placeholder='Type your name here'
+          className='text-input'
         />
       </div>
       <div>
         {/* The text box for user input */}
         <input
           type='text'
-          // bound prop value to headCount
+          // bounds prop value to headCount (where it's coming from)
           value={headCount}
           // onChange handler calls setGuestName to update the state whenever the user types
           onChange={(e) => setHeadCount(e.target.value)} // Update state as they type
-          placeholder='Type headcount...'
+          placeholder='Type headcount'
+          className='text-input'
         />
-        {/* The button users click after typing */}
+        {/* The button users click after typing name */}
         {/* onClick handler calls rsvpHandleButtonClick  OR DeclineHandleButtonClick*/}
         {/* send data to db when a button is clicked */}
         <button onClick={rsvpHandleButtonClick}>RSVP</button>
@@ -109,7 +119,5 @@ function Home() {
     </div>
   );
 }
-
-// TODO user is to be redirected to Confirmation Page3 OR Decline Page4
-
+// export Home component so that it can be used in other files
 export default Home;

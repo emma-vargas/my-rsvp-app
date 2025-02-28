@@ -1,11 +1,18 @@
+//* This forwards API requests (/rsvp) to the Express backend
+// vite: the build tool and development server used for my React fronend
+
 import { defineConfig } from 'vite';
+// node.js
 import path from 'path';
+
+// Imports the React plugin for Vite, which allows Vite to process and optimize React files
 import react from '@vitejs/plugin-react';
 
-//* This forwards API requests (/rsvp) to the Express backend
-
+// exporting an obj that tells vite how to build / serve the project
 export default defineConfig({
+  // tells vite how to process React files
   plugins: [react()],
+  // server vite will start
   server: {
     port: 5173,
     proxy: {
