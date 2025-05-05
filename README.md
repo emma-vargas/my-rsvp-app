@@ -16,13 +16,13 @@ my-rsvp-app/
 ├── client/ # Frontend code
 │ ├── src/ # React components and pages
 │ ├── index.html # Entry point for the frontend
-│ └── README.md # Frontend-specific documentation
 ├── server/ # Backend code
 │ ├── models/ # MongoDB schemas
 │ ├── routes/ # API routes and controllers
 │ └── server.js # Entry point for the backend
 ├── .env # Environment variables
 ├── package.json # Project dependencies and scripts
+├── README.md # Frontend-specific documentation
 └── vite.config.js # Vite configuration
 
 ## Getting Started
