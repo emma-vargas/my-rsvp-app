@@ -12,6 +12,7 @@ My RSVP App is a full-stack web application that allows users to RSVP for an eve
 
 ## Project Structure
 
+```
 my-rsvp-app/
 ├── client/ # Frontend code
 │ ├── src/ # React components and pages
@@ -24,6 +25,7 @@ my-rsvp-app/
 ├── package.json # Project dependencies and scripts
 ├── README.md # Frontend-specific documentation
 └── vite.config.js # Vite configuration
+```
 
 ## Getting Started
 
